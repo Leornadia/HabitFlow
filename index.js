@@ -6,9 +6,11 @@ const morgan = require('morgan');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
+// Connect to SQLite database
 const db = new sqlite3.Database('./habits.db', (err) => {
   if (err) {
     console.error(err.message);
@@ -30,7 +32,19 @@ app.get('/', (req, res) => {
   res.send('Welcome to Habitflow API');
 });
 
-// Add your other routes here...
+// Get all habits
+app.get('/habits', (req, res) => {
+  const sql = `SELECT * FROM habits`;
+  
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+    res.json({ habits: rows });
+  });
+});
+
+// Add other routes (POST, PUT, DELETE) here...
 
 app.listen(port, () => {
   console.log(`Habitflow API is running at http://localhost:${port}`);
