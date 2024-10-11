@@ -1,18 +1,14 @@
-// index.js
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
-const morgan = require('morgan'); // Require morgan for logging
+const morgan = require('morgan');
 
-// Initialize the Express app
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Middleware to parse JSON requests
 app.use(bodyParser.json());
-app.use(morgan('dev')); // Use morgan for logging HTTP requests
+app.use(morgan('dev'));
 
-// Setup SQLite database
 const db = new sqlite3.Database('./habits.db', (err) => {
   if (err) {
     console.error(err.message);
@@ -29,10 +25,13 @@ db.run(`CREATE TABLE IF NOT EXISTS habits (
   last_logged TEXT
 )`);
 
-// Define your routes here (Add Habits, Get All Habits, etc.)
-// ...
+// Root route to display a welcome message
+app.get('/', (req, res) => {
+  res.send('Welcome to Habitflow API');
+});
 
-// Start the server
+// Add your other routes here...
+
 app.listen(port, () => {
   console.log(`Habitflow API is running at http://localhost:${port}`);
 });

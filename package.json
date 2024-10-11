@@ -1,23 +1,21 @@
 {
   "name": "habitflow",
   "version": "1.0.0",
-  "description": "# Habitflow",
+  "description": "Habit tracking API using Express and SQLite",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.3",
     "express": "^4.21.1",
-    "morgan": "^1.10.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
   }
 }
+
