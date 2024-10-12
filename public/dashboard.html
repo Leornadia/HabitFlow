@@ -4,105 +4,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HabitFlow Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen bg-emerald-50">
-    <nav class="bg-emerald-600 p-4 text-white">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Habitflow</h1>
-            <button id="logoutBtn" class="flex items-center space-x-2 bg-red-500 hover:bg-red-600 px-4 py-2 rounded">
-                <i data-feather="log-out"></i>
-                <span>Logout</span>
-            </button>
-        </div>
-    </nav>
-    
-    <main class="container mx-auto mt-8 p-4">
-        <h2 class="text-3xl font-bold mb-6 text-emerald-800">Your Habits Dashboard</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <section class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold mb-4 text-emerald-700">Your Habits</h3>
-                <ul id="habitsList" class="space-y-4">
-                    <!-- Habits will be dynamically added here -->
-                </ul>
-            </section>
-            
-            <section class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold mb-4 text-emerald-700">Add a New Habit</h3>
-                <form id="habitForm" class="space-y-4">
-                    <div>
-                        <label for="habitName" class="block text-sm font-medium text-emerald-700">Habit Name</label>
-                        <input
-                            type="text"
-                            id="habitName"
-                            class="mt-1 block w-full rounded-md border-emerald-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label for="habitDescription" class="block text-sm font-medium text-emerald-700">Habit Description</label>
-                        <textarea
-                            id="habitDescription"
-                            class="mt-1 block w-full rounded-md border-emerald-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200"
-                            rows="3"
-                            required
-                        ></textarea>
-                    </div>
-                    <button type="submit" class="w-full flex justify-center items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        <i data-feather="plus-circle"></i>
-                        <span>Add Habit</span>
-                    </button>
-                </form>
-            </section>
-        </div>
+<body class="emerald-green">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" id="homeLink" class="emerald-green">Home</a></li>
+                <li><a href="#" id="journalLink" class="peach">Journal</a></li>
+                <li><a href="#" id="challengesLink" class="red">Challenges</a></li>
+                <li><a href="#" id="checkinLink" class="peach">Check-ins</a></li>
+                <li><button id="logoutBtn" class="red">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboardSection">
+            <h1>Your Habits Dashboard</h1>
+            <h2>Your Habits</h2>
+            <ul id="habitsList"></ul>
+
+            <h2>Add a New Habit</h2>
+            <form id="habitForm">
+                <label for="name">Habit Name</label><br>
+                <input type="text" id="name" name="name" placeholder="Enter habit name" required><br><br>
+
+                <label for="description">Habit Description</label><br>
+                <input type="text" id="description" name="description" placeholder="Enter habit description"><br><br>
+
+                <button type="submit" class="peach">Add Habit</button>
+            </form>
+        </section>
+
+        <!-- Journal Section -->
+        <section id="journalSection" style="display: none;">
+            <h1>Journal</h1>
+            <textarea id="journalEntry" rows="10" placeholder="Write your journal here..."></textarea><br>
+            <button id="saveJournalBtn" class="peach">Save Journal</button>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challengesSection" style="display: none;">
+            <h1>Challenges</h1>
+            <ul id="challengesList">
+                <li>30-day Meditation Challenge</li>
+                <li>Weekly Exercise Challenge</li>
+                <!-- Add more challenges as needed -->
+            </ul>
+            <button id="startChallengeBtn" class="emerald-green">Start New Challenge</button>
+        </section>
+
+        <!-- Check-in Section -->
+        <section id="checkinSection" style="display: none;">
+            <h1>Daily Check-ins</h1>
+            <h2>Morning Check-in</h2>
+            <button id="morningCheckinBtn" class="emerald-green">Check-in</button>
+
+            <h2>Afternoon Check-in</h2>
+            <button id="afternoonCheckinBtn" class="emerald-green">Check-in</button>
+
+            <h2>Evening Check-in</h2>
+            <button id="eveningCheckinBtn" class="emerald-green">Check-in</button>
+        </section>
     </main>
 
     <script>
-        // Initialize Feather icons
-        feather.replace();
-
-        // Initial habits data
-        let habits = [
-            { name: 'Reading', description: 'reading books, newsletter and articles.' }
-        ];
-
-        // Function to render habits
-        function renderHabits() {
-            const habitsList = document.getElementById('habitsList');
-            habitsList.innerHTML = habits.map((habit, index) => `
-                <li class="flex items-start space-x-3 p-3 bg-emerald-100 rounded">
-                    <i data-feather="book-open" class="text-emerald-600"></i>
-                    <div>
-                        <h4 class="font-medium text-emerald-800">${habit.name}</h4>
-                        <p class="text-sm text-emerald-600">${habit.description}</p>
-                    </div>
-                </li>
-            `).join('');
-            feather.replace();
-        }
-
-        // Add new habit
-        document.getElementById('habitForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('habitName').value;
-            const description = document.getElementById('habitDescription').value;
-            if (name && description) {
-                habits.push({ name, description });
-                renderHabits();
-                this.reset();
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('You are not logged in!');
+                window.location.href = '/login'; // Redirect to login if not authenticated
+                return;
             }
-        });
 
-        // Initial render
-        renderHabits();
+            // Handle Navigation
+            const homeLink = document.getElementById('homeLink');
+            const journalLink = document.getElementById('journalLink');
+            const challengesLink = document.getElementById('challengesLink');
+            const checkinLink = document.getElementById('checkinLink');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const journalSection = document.getElementById('journalSection');
+            const challengesSection = document.getElementById('challengesSection');
+            const checkinSection = document.getElementById('checkinSection');
 
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            // Add logout logic here
-            alert('Logout clicked');
+            homeLink.addEventListener('click', () => {
+                dashboardSection.style.display = 'block';
+                journalSection.style.display = 'none';
+                challengesSection.style.display = 'none';
+                checkinSection.style.display = 'none';
+            });
+
+            journalLink.addEventListener('click', () => {
+                dashboardSection.style.display = 'none';
+                journalSection.style.display = 'block';
+                challengesSection.style.display = 'none';
+                checkinSection.style.display = 'none';
+            });
+
+            challengesLink.addEventListener('click', () => {
+                dashboardSection.style.display = 'none';
+                journalSection.style.display = 'none';
+                challengesSection.style.display = 'block';
+                checkinSection.style.display = 'none';
+            });
+
+            checkinLink.addEventListener('click', () => {
+                dashboardSection.style.display = 'none';
+                journalSection.style.display = 'none';
+                challengesSection.style.display = 'none';
+                checkinSection.style.display = 'block';
+            });
+
+            // Fetch habits from the backend
+            fetch('/habits', {
+                method: 'GET',
+                headers: {
+                    'Authorization': token, // Pass the token in the header
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.habits && data.habits.length > 0) {
+                    const habitsList = document.getElementById('habitsList');
+                    habitsList.innerHTML = '';
+                    data.habits.forEach(habit => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${habit.name}: ${habit.description || 'No description'}`;
+                        habitsList.appendChild(listItem);
+                    });
+                } else {
+                    const habitsList = document.getElementById('habitsList');
+                    habitsList.innerHTML = '<p>No habits found. Start adding new habits!</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching habits:', error);
+                alert('Failed to load habits.');
+            });
+
+            // Handle habit creation
+            const habitForm = document.getElementById('habitForm');
+            habitForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const description = document.getElementById('description').value;
+
+                fetch('/habits', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token, 
+                    },
+                    body: JSON.stringify({ name, description }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Habit added successfully!');
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error adding habit:', error);
+                    alert('Failed to add habit.');
+                });
+            });
+
+            // Logout functionality
+            const logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+            });
         });
     </script>
 </body>
 </html>
+
