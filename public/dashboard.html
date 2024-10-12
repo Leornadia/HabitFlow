@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Habits - Habitflow</title>
+  <title>Dashboard - HabitFlow</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Your Habits</h1>
-  <p>Welcome to your dashboard!</p>
+  <h1>Your Habits Dashboard</h1>
   <button id="logout-btn">Logout</button>
 
   <script>
     document.getElementById('logout-btn').addEventListener('click', function() {
-      localStorage.removeItem('token'); // Clear token
-      window.location.href = '/login.html';  // Redirect to login page
+      localStorage.removeItem('token'); // Clear the token and logout
+      window.location.href = 'login.html'; // Redirect to login page
     });
   </script>
 </body>

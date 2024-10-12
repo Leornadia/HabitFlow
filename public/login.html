@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Habitflow</title>
+  <title>Login - HabitFlow</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Login to Habitflow</h1>
+  <h1>Login</h1>
   <form id="login-form">
     <label for="email">Email</label>
     <input type="email" id="email" name="email" required>
@@ -17,31 +18,9 @@
     <button type="submit">Login</button>
   </form>
 
-  <p>Don't have an account? <a href="/signup.html">Sign up here</a></p>
+  <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
 
-  <script>
-    document.getElementById('login-form').addEventListener('submit', async function(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        localStorage.setItem('token', data.token); // Save JWT token in localStorage
-        window.location.href = '/dashboard.html';  // Redirect to the main dashboard
-      } else {
-        alert(data.error);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
 
