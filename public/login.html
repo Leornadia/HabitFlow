@@ -1,26 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - HabitFlow</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HabitFlow</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Login</h1>
-  <form id="login-form">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-    <br><br>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
-    <br><br>
-    <button type="submit">Login</button>
-  </form>
+    <h1>Welcome to HabitFlow</h1>
+    <h2>Login to Your Account</h2>
 
-  <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    <form id="loginForm">
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required><br><br>
 
-  <script src="script.js"></script>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="/">Sign up here</a></p>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent form from submitting the traditional way
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Sending login credentials to the backend
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    // Save the token to localStorage
+                    localStorage.setItem('token', data.token);
+                    alert('Login successful!');
+                    window.location.href = '/dashboard'; // Redirect to the dashboard
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 
