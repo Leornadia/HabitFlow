@@ -6,34 +6,34 @@ body {
     background-color: #f0f0f0;
 }
 
-/* Color classes */
-.emerald-green {
-    color: #008000;
+/* Softer Color classes */
+.light-brown {
+    color: #D2B48C;
 }
 
-.red {
-    color: #FF0000;
+.muted-red {
+    color: #E57373;
 }
 
-.peach {
-    color: #FFCC99;
+.light-peach {
+    color: #FFDAB9;
 }
 
-.peach-bg {
-    background-color: #FFCC99;
+.light-peach-bg {
+    background-color: #FFDAB9;
 }
 
-.red-bg {
-    background-color: #FF0000;
+.muted-red-bg {
+    background-color: #E57373;
 }
 
-.emerald-green-bg {
-    background-color: #008000;
+.light-brown-bg {
+    background-color: #D2B48C;
 }
 
 /* Header styles */
 header {
-    background-color: #008000;
+    background-color: #D2B48C;
     padding: 10px;
     color: white;
 }
@@ -61,7 +61,7 @@ nav ul li a, nav ul li button {
 }
 
 nav ul li a:hover, nav ul li button:hover {
-    background-color: #005f00;
+    background-color: #b89470;
 }
 
 /* Main section styles */
@@ -70,7 +70,7 @@ main {
 }
 
 h1, h2 {
-    color: #008000;
+    color: #D2B48C;
 }
 
 form {
@@ -80,7 +80,7 @@ form {
 form label {
     display: block;
     margin-bottom: 5px;
-    color: #005f00;
+    color: #b89470;
 }
 
 form input[type="text"], form input[type="password"], form textarea {
@@ -92,7 +92,7 @@ form input[type="text"], form input[type="password"], form textarea {
 }
 
 form button {
-    background-color: #FFCC99;
+    background-color: #FFDAB9;
     color: black;
     padding: 10px 20px;
     border: none;
@@ -101,7 +101,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #ffa873;
+    background-color: #fbc1a2;
 }
 
 /* Section styles */
@@ -138,7 +138,7 @@ section {
 
 /* Button styles */
 button {
-    background-color: #008000;
+    background-color: #D2B48C;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -147,14 +147,7 @@ button {
 }
 
 button:hover {
-    background-color: #005f00;
-}
-
-/* Check-ins buttons */
-#morningCheckinBtn, #afternoonCheckinBtn, #eveningCheckinBtn {
-    display: block;
-    width: 100%;
-    margin-bottom: 20px;
+    background-color: #b89470;
 }
 
 /* Responsive styles */
