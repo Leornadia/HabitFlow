@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Habitflow</title>
-    <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Habitflow</title>
 </head>
 <body>
-    <h1>Login to Habitflow</h1>
-    <form id="loginForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+  <h1>Login to Habitflow</h1>
+  <form id="login-form">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+    <br><br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+    <br><br>
+    <button type="submit">Login</button>
+  </form>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+  <p>Don't have an account? <a href="/signup.html">Sign up here</a></p>
 
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/signup.html">Sign up here</a></p>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-    <script src="/script.js"></script>
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('token', data.token); // Save JWT token in localStorage
+        window.location.href = '/dashboard.html';  // Redirect to the main dashboard
+      } else {
+        alert(data.error);
+      }
+    });
+  </script>
 </body>
 </html>
 
