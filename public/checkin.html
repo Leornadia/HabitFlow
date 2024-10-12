@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabitFlow Dashboard</title>
+    <title>HabitFlow - Check-ins</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,26 +21,25 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <h1>Your Habits Dashboard</h1>
+            <h1>Check-ins</h1>
 
-            <!-- List existing habits -->
             <div class="card">
-                <h2>Your Habits</h2>
-                <p><strong>Reading:</strong> Reading books, newsletter, and articles.</p>
+                <form id="checkin-form">
+                    <label for="timeOfDay">Check-in Time of Day</label>
+                    <select id="timeOfDay" required>
+                        <option value="morning">Morning</option>
+                        <option value="afternoon">Afternoon</option>
+                        <option value="evening">Evening</option>
+                    </select>
+
+                    <button type="submit">Check-in</button>
+                </form>
             </div>
 
-            <!-- Add new habit -->
+            <!-- Display previous check-ins -->
             <div class="card">
-                <h2>Add a New Habit</h2>
-                <form id="habit-form">
-                    <label for="name">Habit Name</label>
-                    <input type="text" id="name" placeholder="Enter habit name" required>
-
-                    <label for="description">Habit Description</label>
-                    <textarea id="description" placeholder="Enter habit description" required></textarea>
-
-                    <button type="submit">Add Habit</button>
-                </form>
+                <h2>Today's Check-ins</h2>
+                <ul id="checkins-list"></ul>
             </div>
         </div>
 
