@@ -1,164 +1,62 @@
-/* General styles */
+/* General Body Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #faf3e0; /* Light peach background */
+    text-align: center;
+    color: #333;
 }
 
-/* Softer Color classes */
-.light-brown {
-    color: #D2B48C;
-}
-
-.muted-red {
-    color: #E57373;
-}
-
-.light-peach {
-    color: #FFDAB9;
-}
-
-.light-peach-bg {
-    background-color: #FFDAB9;
-}
-
-.muted-red-bg {
-    background-color: #E57373;
-}
-
-.light-brown-bg {
-    background-color: #D2B48C;
-}
-
-/* Header styles */
+/* Header Section */
 header {
-    background-color: #D2B48C;
-    padding: 10px;
-    color: white;
+    background-color: #ffcc99; /* Light Peach */
+    padding: 20px;
 }
 
-nav ul {
-    list-style-type: none;
+header h1 {
     margin: 0;
-    padding: 0;
-    overflow: hidden;
+    color: #006400; /* Emerald green */
+    font-size: 2.5rem;
 }
 
-nav ul li {
-    display: inline;
-    margin-right: 20px;
+header p {
+    margin-top: 10px;
+    font-size: 1.2rem;
 }
 
-nav ul li a, nav ul li button {
+/* Hero Image Styling */
+.hero-image {
+    margin: 20px auto;
+}
+
+.landing-img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Section */
+.nav-buttons {
+    margin: 30px auto;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6666; /* Light Red */
     color: white;
     text-decoration: none;
-    padding: 10px 20px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-nav ul li a:hover, nav ul li button:hover {
-    background-color: #b89470;
-}
-
-/* Main section styles */
-main {
-    padding: 20px;
-}
-
-h1, h2 {
-    color: #D2B48C;
-}
-
-form {
-    margin-top: 20px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #b89470;
-}
-
-form input[type="text"], form input[type="password"], form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #cccccc;
     border-radius: 5px;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+    font-size: 1.1rem;
 }
 
-form button {
-    background-color: #FFDAB9;
-    color: black;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #fbc1a2;
-}
-
-/* Section styles */
-section {
-    margin-bottom: 40px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Habits list */
-#habitsList {
-    list-style-type: none;
-    padding: 0;
-}
-
-#habitsList li {
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-}
-
-/* Journal styles */
-#journalEntry {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-}
-
-/* Button styles */
-button {
-    background-color: #D2B48C;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #b89470;
-}
-
-/* Responsive styles */
-@media (max-width: 600px) {
-    nav ul li {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    button {
-        width: 100%;
-    }
+.btn:hover {
+    background-color: #cc0000; /* Darker Red */
 }
 
