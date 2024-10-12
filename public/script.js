@@ -48,37 +48,3 @@ if (loginForm) {
   });
 }
 
-// Handle Habit Form Submission
-const addHabitForm = document.getElementById('addHabitForm');
-if (addHabitForm) {
-  addHabitForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const token = localStorage.getItem('token');
-    const habitName = document.getElementById('habitName').value;
-    const description = document.getElementById('description').value;
-
-    const response = await fetch('/habits', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': token },
-      body: JSON.stringify({ name: habitName, description }),
-    });
-
-    if (response.ok) {
-      alert('Habit added successfully!');
-      // Optionally refresh the list of habits
-    } else {
-      alert('Error adding habit.');
-    }
-  });
-}
-
-// Handle Logout
-const logoutButton = document.getElementById('logout');
-if (logoutButton) {
-  logoutButton.addEventListener('click', () => {
-    localStorage.removeItem('token'); // Clear JWT
-    window.location.href = '/login.html'; // Redirect to login page
-  });
-}
-
