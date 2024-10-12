@@ -1,59 +1,69 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const bodyParser = require('body-parser');
-const path = require('path');
-const morgan = require('morgan');
-
 const app = express();
-const port = process.env.PORT || 3000;
-const SECRET_KEY = 'your_jwt_secret'; // Change this to a secure key in production
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-// Middleware
-app.use(bodyParser.json());
-app.use(morgan('dev'));
+// Initialize SQLite database (using in-memory for now, you can switch to persistent)
+const db = new sqlite3.Database('./habitflow.db'); // Save to habitflow.db file instead of memory
 
-// Serve static files from the 'public' directory
+// Create necessary tables (users and habits)
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT NOT NULL,
+      email TEXT NOT NULL,
+      password TEXT NOT NULL
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS habits (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT,
+      streak INTEGER DEFAULT 0,
+      last_logged TEXT,
+      user_id INTEGER,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+  `);
+});
+
 app.use(express.static('public'));
+app.use(express.json());
 
-// Connect to SQLite database
-const db = new sqlite3.Database('./habits.db', (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the habits database.');
-});
+// Middleware to authenticate JWT tokens
+function authenticateToken(req, res, next) {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(403).send('Access denied.');
 
-// Create users table if it doesn't exist
-db.run(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    email TEXT NOT NULL,
-    password TEXT NOT NULL
-  )
-`);
+  jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    if (err) return res.status(403).send('Invalid token.');
+    req.user = user;
+    next();
+  });
+}
 
-// Create habits table if it doesn't exist
-db.run(`
-  CREATE TABLE IF NOT EXISTS habits (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    description TEXT,
-    streak INTEGER DEFAULT 0,
-    last_logged TEXT,
-    user_id INTEGER,
-    FOREIGN KEY(user_id) REFERENCES users(id)
-  )
-`);
-
-// Root route to serve the frontend
+// Routes
+// Serve the signup page as the root
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
-// Registration route
+// Serve the login page
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Serve the dashboard page
+app.get('/dashboard.html', authenticateToken, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+// User registration route
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
@@ -65,15 +75,16 @@ app.post('/register', (req, res) => {
   });
 });
 
-// Login route
+// User login route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   const sql = `SELECT * FROM users WHERE email = ?`;
   db.get(sql, [email], (err, user) => {
     if (err) return res.status(400).json({ error: err.message });
+
     if (user && bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ id: user.id }, SECRET_KEY);
+      const token = jwt.sign({ id: user.id }, 'your_jwt_secret');
       res.json({ token });
     } else {
       res.status(400).json({ error: 'Invalid credentials' });
@@ -81,29 +92,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Authentication middleware
-function authenticateToken(req, res, next) {
-  const token = req.headers['authorization'];
-  if (!token) return res.status(403).json({ error: 'Access denied.' });
-
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid token.' });
-    req.user = user;
-    next();
-  });
-}
-
-// Get all habits for the logged-in user
-app.get('/habits', authenticateToken, (req, res) => {
-  const sql = `SELECT * FROM habits WHERE user_id = ?`;
-
-  db.all(sql, [req.user.id], (err, rows) => {
-    if (err) return res.status(400).json({ error: err.message });
-    res.json({ habits: rows });
-  });
-});
-
-// Create a new habit
+// Route to create a new habit
 app.post('/habits', authenticateToken, (req, res) => {
   const { name, description } = req.body;
   const sql = `INSERT INTO habits (name, description, user_id) VALUES (?, ?, ?)`;
@@ -114,29 +103,25 @@ app.post('/habits', authenticateToken, (req, res) => {
   });
 });
 
-// Update a habit
-app.put('/habits/:id', authenticateToken, (req, res) => {
-  const { name, description, streak } = req.body;
-  const sql = `UPDATE habits SET name = ?, description = ?, streak = ? WHERE id = ? AND user_id = ?`;
+// Route to get all habits for the logged-in user
+app.get('/habits', authenticateToken, (req, res) => {
+  const sql = `SELECT * FROM habits WHERE user_id = ?`;
 
-  db.run(sql, [name, description, streak, req.params.id, req.user.id], function (err) {
+  db.all(sql, [req.user.id], (err, rows) => {
     if (err) return res.status(400).json({ error: err.message });
-    res.json({ message: 'Habit updated successfully!' });
+    res.json({ habits: rows });
   });
 });
 
-// Delete a habit
-app.delete('/habits/:id', authenticateToken, (req, res) => {
-  const sql = `DELETE FROM habits WHERE id = ? AND user_id = ?`;
-
-  db.run(sql, [req.params.id, req.user.id], function (err) {
-    if (err) return res.status(400).json({ error: err.message });
-    res.json({ message: 'Habit deleted successfully!' });
-  });
+// Route to log out
+app.post('/logout', (req, res) => {
+  // Invalidate the token (if you're storing tokens on the client, you can remove it there)
+  res.json({ message: 'Logged out successfully' });
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Habitflow API is running at http://localhost:${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
