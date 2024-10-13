@@ -1,109 +1,202 @@
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const app = express();
-const port = 3000;
+// Global variables to store JWT token after login
+let token = '';
 
-// Middleware
-app.use(bodyParser.json());
-app.use(express.static('public'));
+// Function to handle login
+async function loginUser(event) {
+    event.preventDefault();
 
-// Connect to SQLite Database
-const db = new sqlite3.Database('./habitflow.db', (err) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.message);
-  } else {
-    console.log('Connected to the SQLite database.');
-    
-    // Create Users Table if it doesn't exist
-    db.run(`CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT NOT NULL,
-      email TEXT NOT NULL,
-      password TEXT NOT NULL
-    )`);
-    
-    // Create Check-ins Table if it doesn't exist
-    db.run(`CREATE TABLE IF NOT EXISTS checkins (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER,
-      time_of_day TEXT,
-      date TEXT,
-      FOREIGN KEY(user_id) REFERENCES users(id)
-    )`);
-    
-    // Create Journal Entries Table if it doesn't exist
-    db.run(`CREATE TABLE IF NOT EXISTS journal_entries (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      entry TEXT NOT NULL,
-      user_id INTEGER,
-      date TEXT,
-      FOREIGN KEY(user_id) REFERENCES users(id)
-    )`);
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    console.log('Database tables created (if they didn\'t exist already).');
-  }
-});
+    try {
+        const res = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
 
-// Middleware to authenticate the token
-function authenticateToken(req, res, next) {
-  const token = req.headers['authorization'];
-  if (!token) return res.status(401).json({ error: 'No token provided' });
-
-  jwt.verify(token, 'your_jwt_secret', (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid token' });
-    req.user = user;
-    next();
-  });
+        const data = await res.json();
+        if (res.status === 200) {
+            token = data.token;
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            loadDashboard();
+        } else {
+            alert(data.error || 'Login failed');
+        }
+    } catch (error) {
+        console.error('Error logging in:', error);
+    }
 }
 
-// Route: Add a new check-in
-app.post('/checkin', authenticateToken, (req, res) => {
-  const { timeOfDay } = req.body; // morning, afternoon, evening
-  const date = new Date().toISOString().split('T')[0]; // Get today's date
-  
-  const sql = `INSERT INTO checkins (user_id, time_of_day, date) VALUES (?, ?, ?)`;
-  db.run(sql, [req.user.id, timeOfDay, date], function (err) {
-    if (err) return res.status(400).json({ error: err.message });
-    res.json({ message: `Check-in for ${timeOfDay} saved successfully!` });
-  });
-});
+// Function to load user habits
+async function loadHabits() {
+    try {
+        const res = await fetch('/habits', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        });
+        const data = await res.json();
+        displayHabits(data.habits);
+    } catch (error) {
+        console.error('Error loading habits:', error);
+    }
+}
 
-// Route: Get today's check-ins for a user
-app.get('/checkin', authenticateToken, (req, res) => {
-  const date = new Date().toISOString().split('T')[0];
-  const sql = `SELECT * FROM checkins WHERE user_id = ? AND date = ?`;
-  
-  db.all(sql, [req.user.id, date], (err, rows) => {
-    if (err) return res.status(400).json({ error: err.message });
-    res.json({ checkins: rows });
-  });
-});
+// Function to display habits
+function displayHabits(habits) {
+    const habitList = document.getElementById('habit-list');
+    habitList.innerHTML = '';
+    habits.forEach(habit => {
+        const habitItem = document.createElement('li');
+        habitItem.textContent = `${habit.name}: ${habit.description}`;
+        habitList.appendChild(habitItem);
+    });
+}
 
-// Route: Save a journal entry
-app.post('/journal', authenticateToken, (req, res) => {
-  const { entry } = req.body;
-  const date = new Date().toISOString();
-  
-  const sql = `INSERT INTO journal_entries (entry, user_id, date) VALUES (?, ?, ?)`;
-  db.run(sql, [entry, req.user.id, date], function (err) {
-    if (err) return res.status(400).json({ error: err.message });
-    res.json({ message: 'Journal entry saved successfully!' });
-  });
-});
+// Function to add a new habit
+async function addHabit(event) {
+    event.preventDefault();
 
-// Route: Get journal entries for a user
-app.get('/journal', authenticateToken, (req, res) => {
-  const sql = `SELECT * FROM journal_entries WHERE user_id = ?`;
-  db.all(sql, [req.user.id], (err, rows) => {
-    if (err) return res.status(400).json({ error: err.message });
-    res.json({ journal: rows });
-  });
-});
+    const name = document.getElementById('habit-name').value;
+    const description = document.getElementById('habit-description').value;
 
-// Start Server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+    try {
+        const res = await fetch('/habits', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({ name, description })
+        });
+
+        const data = await res.json();
+        if (res.status === 200) {
+            loadHabits();
+        } else {
+            alert(data.error || 'Failed to add habit');
+        }
+    } catch (error) {
+        console.error('Error adding habit:', error);
+    }
+}
+
+// Function to load journal entries
+async function loadJournalEntries() {
+    try {
+        const res = await fetch('/journal', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        });
+        const data = await res.json();
+        displayJournalEntries(data.journal);
+    } catch (error) {
+        console.error('Error loading journal:', error);
+    }
+}
+
+// Function to display journal entries
+function displayJournalEntries(entries) {
+    const journalList = document.getElementById('journal-list');
+    journalList.innerHTML = '';
+    entries.forEach(entry => {
+        const journalItem = document.createElement('li');
+        journalItem.textContent = `${entry.date}: ${entry.entry}`;
+        journalList.appendChild(journalItem);
+    });
+}
+
+// Function to add a new journal entry
+async function addJournalEntry(event) {
+    event.preventDefault();
+
+    const entry = document.getElementById('journal-entry').value;
+
+    try {
+        const res = await fetch('/journal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({ entry })
+        });
+
+        const data = await res.json();
+        if (res.status === 200) {
+            loadJournalEntries();
+        } else {
+            alert(data.error || 'Failed to add journal entry');
+        }
+    } catch (error) {
+        console.error('Error adding journal entry:', error);
+    }
+}
+
+// Function to handle check-ins (morning, afternoon, evening)
+async function handleCheckIn(timeOfDay) {
+    try {
+        const res = await fetch('/checkin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({ timeOfDay })
+        });
+
+        const data = await res.json();
+        alert(data.message || `Checked in for ${timeOfDay}`);
+    } catch (error) {
+        console.error('Error checking in:', error);
+    }
+}
+
+// Function to handle file upload (e.g. progress photo for habits)
+async function uploadImage(event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    const file = document.getElementById('image-upload').files[0];
+    formData.append('image', file);
+
+    try {
+        const res = await fetch('/upload', {
+            method: 'POST',
+            headers: {
+                'Authorization': token
+            },
+            body: formData
+        });
+
+        const data = await res.json();
+        alert(data.message || 'Image uploaded successfully');
+    } catch (error) {
+        console.error('Error uploading image:', error);
+    }
+}
+
+// Function to load the dashboard (habits, journal, etc.)
+function loadDashboard() {
+    loadHabits();
+    loadJournalEntries();
+}
+
+// Event listeners for form submissions
+document.getElementById('login-form').addEventListener('submit', loginUser);
+document.getElementById('habit-form').addEventListener('submit', addHabit);
+document.getElementById('journal-form').addEventListener('submit', addJournalEntry);
+document.getElementById('image-upload-form').addEventListener('submit', uploadImage);
+
+// Check-in buttons
+document.getElementById('morning-checkin').addEventListener('click', () => handleCheckIn('morning'));
+document.getElementById('afternoon-checkin').addEventListener('click', () => handleCheckIn('afternoon'));
+document.getElementById('evening-checkin').addEventListener('click', () => handleCheckIn('evening'));
 
