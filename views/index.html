@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HabitFlow</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="container">
-        <!-- Left-side Menu (Sidebar) -->
+        <!-- Left-side Menu -->
         <nav class="sidebar">
             <ul>
                 <li><a href="/">Home</a></li>
@@ -27,16 +27,16 @@
                 <p><strong>Reading:</strong> Reading books, newsletters, and articles.</p>
             </section>
 
-            <!-- Add New Habit Section -->
+            <!-- Add New Habit Form -->
             <section class="add-habit">
                 <h2>Add a New Habit</h2>
                 <form action="/add-habit" method="POST">
                     <label for="habit-name">Habit Name</label>
                     <input type="text" id="habit-name" name="habit_name" placeholder="Enter habit name">
-                    
+
                     <label for="habit-description">Habit Description</label>
                     <input type="text" id="habit-description" name="habit_description" placeholder="Enter habit description">
-                    
+
                     <button type="submit">Add Habit</button>
                 </form>
             </section>
