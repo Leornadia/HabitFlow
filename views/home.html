@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/styles.css">
-  <title>Home - Habitflow</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow - Home</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome to Habitflow</h1>
-  </header>
-
-  <main>
-    <div class="options">
-      <a href="/habits">Go to Habits</a>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>HabitFlow</h2>
+            <nav>
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/journal">Journal</a></li>
+                    <li><a href="/challenges">Challenges</a></li>
+                    <li><a href="/checkins">Check-ins</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <h1>Your Habits Dashboard</h1>
+            <p>Welcome to your habits dashboard! Track your progress here.</p>
+            <a href="/habits" class="button">View Your Habits</a>
+            <a href="/dashboard" class="button">Go to Dashboard</a>
+        </main>
     </div>
-  </main>
 </body>
 </html>
 

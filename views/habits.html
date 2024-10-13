@@ -1,41 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/styles.css">
-  <title>Your Habits - Habitflow</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow - Your Habits</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Your Habits</h1>
-  </header>
-
-  <main>
-    <form id="habit-form">
-      <input type="text" id="name" placeholder="Habit Name" required>
-      <input type="text" id="description" placeholder="Description">
-      <button type="submit">Add Habit</button>
-    </form>
-
-    <div id="habit-list">
-      <!-- Habits will be listed here -->
-    </div>
-  </main>
-
-  <script>
-    // Example of JS code to fetch habits
-    fetch('/habits')
-      .then(response => response.json())
-      .then(data => {
-        const habitList = document.getElementById('habit-list');
-        data.habits.forEach(habit => {
-          const habitDiv = document.createElement('div');
-          habitDiv.innerHTML = `<h3>${habit.name}</h3><p>${habit.description}</p>`;
-          habitList.appendChild(habitDiv);
-        });
-      });
-  </script>
-</body>
-</html>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>HabitFlow</h2>
+            <nav>
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/journal">Journal</a></li>
+                    <li><a href="/challenges">Challenges</a></li>
+                    <li><a href="/checkins">Check-ins</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
 
