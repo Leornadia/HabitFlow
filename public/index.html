@@ -3,165 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habit Tracker</title>
+    <title>HabitFlow</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Your Habit Tracker</h1>
-    </header>
+    <div class="container">
+        <!-- Left-side Menu (Sidebar) -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/journal.html">Journal</a></li>
+                <li><a href="/challenges.html">Challenges</a></li>
+                <li><a href="/checkins.html">Check-ins</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
 
-    <!-- Interactive Dashboard -->
-    <section class="dashboard">
-        <h2>Interactive Habit Dashboard</h2>
-        <canvas id="habitCompletionChart" width="400" height="200"></canvas>
-        <canvas id="habitStreakChart" width="400" height="200"></canvas>
-    </section>
+        <!-- Right-side Content Area -->
+        <div class="content">
+            <h1>Welcome to Your HabitFlow Dashboard</h1>
+            <section class="habit-list">
+                <h2>Your Habits</h2>
+                <p><strong>Reading:</strong> Reading books, newsletters, and articles.</p>
+            </section>
 
-    <!-- Habit Templates -->
-    <section class="habit-templates">
-        <h2>Habit Templates and Suggestions</h2>
-        <ul>
-            <li>🧘 Meditation</li>
-            <li>📚 Reading 10 pages a day</li>
-            <li>🏃‍♂️ Running 5 km</li>
-            <li>🥗 Healthy eating</li>
-        </ul>
-    </section>
-
-    <!-- Personalized Insights -->
-    <section class="insights">
-        <h2>Personalized Insights</h2>
-        <p>You've completed your habits 80% of the time this month. Keep up the good work!</p>
-    </section>
-
-    <!-- Daily Motivational Quote -->
-    <section class="daily-quote">
-        <h3>Daily Motivational Quote</h3>
-        <p id="quote">"The journey of a thousand miles begins with one step."</p>
-    </section>
-
-    <!-- Habit Sharing -->
-    <section class="habit-sharing">
-        <button id="share-progress-btn">Share Your Progress</button>
-        <p id="share-link" style="display:none;">https://habittracker.com/progress/user123</p>
-    </section>
-
-    <!-- Set Custom Reminders -->
-    <section class="reminders">
-        <h3>Set a Custom Reminder</h3>
-        <form action="/set-reminder" method="POST">
-            <label for="habit">Habit</label>
-            <select id="habit" name="habit">
-                <option value="exercise">Exercise</option>
-                <option value="reading">Reading</option>
-            </select>
-            <label for="time">Reminder Time</label>
-            <input type="time" id="time" name="time">
-            <button type="submit">Set Reminder</button>
-        </form>
-    </section>
-
-    <!-- Upload Progress Photos -->
-    <section class="progress-photos">
-        <h3>Upload Progress Photo</h3>
-        <form action="/upload-progress-photo" method="POST" enctype="multipart/form-data">
-            <input type="file" name="progress-photo" accept="image/*">
-            <button type="submit">Upload Photo</button>
-        </form>
-    </section>
-
-    <!-- Habit Challenges -->
-    <section class="habit-challenges">
-        <h3>Habit Challenges</h3>
-        <button id="join-challenge-btn">Join the 30-Day Fitness Challenge</button>
-    </section>
-
-    <!-- Customizable Widgets -->
-    <section class="widgets">
-        <h3>Customizable Widgets</h3>
-        <div class="widget" style="background-color: #FFE5B4;">
-            <p>Your daily habit completion: 75%</p>
+            <!-- Add New Habit Section -->
+            <section class="add-habit">
+                <h2>Add a New Habit</h2>
+                <form action="/add-habit" method="POST">
+                    <label for="habit-name">Habit Name</label>
+                    <input type="text" id="habit-name" name="habit_name" placeholder="Enter habit name">
+                    
+                    <label for="habit-description">Habit Description</label>
+                    <input type="text" id="habit-description" name="habit_description" placeholder="Enter habit description">
+                    
+                    <button type="submit">Add Habit</button>
+                </form>
+            </section>
         </div>
-    </section>
-
-    <!-- Feedback Form -->
-    <section class="feedback">
-        <h3>We value your feedback!</h3>
-        <form action="/submit-feedback" method="POST">
-            <textarea name="feedback" rows="5" placeholder="Share your thoughts..."></textarea>
-            <button type="submit">Submit Feedback</button>
-        </form>
-    </section>
-
-    <!-- Milestones -->
-    <section class="milestones">
-        <h3>Milestones</h3>
-        <div class="milestone" style="background-color: #D2B48C;">
-            <p>30-Day Streak on Reading!</p>
-        </div>
-    </section>
-
-    <!-- Dark Mode Toggle -->
-    <section>
-        <button id="toggle-dark-mode">Toggle Dark Mode</button>
-    </section>
-
-    <script>
-        // Random Motivational Quote
-        const quotes = [
-            "The journey of a thousand miles begins with one step.",
-            "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-            "Don't watch the clock; do what it does. Keep going.",
-            "The only limit to our realization of tomorrow is our doubts of today."
-        ];
-        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        document.getElementById('quote').innerText = randomQuote;
-
-        // Habit Completion Chart
-        var ctx1 = document.getElementById('habitCompletionChart').getContext('2d');
-        var habitCompletionChart = new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['Exercise', 'Reading', 'Meditation'],
-                datasets: [{
-                    label: 'Completion Rate',
-                    data: [75, 60, 90],
-                    backgroundColor: ['#D2B48C', '#FFE5B4', '#FF6347'],
-                    borderColor: ['#D2B48C', '#FFE5B4', '#FF6347'],
-                    borderWidth: 1
-                }]
-            }
-        });
-
-        // Streaks Chart
-        var ctx2 = document.getElementById('habitStreakChart').getContext('2d');
-        var habitStreakChart = new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                datasets: [{
-                    label: 'Streaks',
-                    data: [5, 10, 15, 20],
-                    backgroundColor: '#FF6347',
-                    borderColor: '#FF6347',
-                    fill: false,
-                    tension: 0.1
-                }]
-            }
-        });
-
-        // Dark Mode Toggle
-        document.getElementById('toggle-dark-mode').addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-        });
-
-        // Share Progress
-        document.getElementById('share-progress-btn').addEventListener('click', () => {
-            document.getElementById('share-link').style.display = 'block';
-        });
-    </script>
+    </div>
 </body>
 </html>
 
