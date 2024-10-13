@@ -1,74 +1,106 @@
-/* Global Styles */
+/* Base Colors based on the image palette */
+:root {
+    --cream: #F6E5D3;
+    --light-brown: #D2B48C;
+    --light-red: #E97B5E;
+    --text-color: #2C2C2C;
+    --highlight-text: #FFFFFF;
+    --accent-color: #FFDDC1;
+}
+
+/* Body and Global Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
-    color: #333;
+}
+
+nav {
+    background-color: var(--light-red);
+    padding: 10px;
+    color: var(--highlight-text);
+}
+
+nav a {
+    color: var(--highlight-text);
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 18px;
 }
 
 /* Container Layout */
 .container {
     display: flex;
-}
-
-/* Sidebar Styles */
-.sidebar {
-    width: 250px;
-    background-color: #D2B48C; /* Light Brown */
-    padding: 20px;
+    flex-direction: row;
     height: 100vh;
 }
 
-.sidebar h2 {
-    color: #FFF;
-}
-
-.sidebar nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar nav ul li {
-    margin: 10px 0;
-}
-
-.sidebar nav ul li a {
-    color: #FFF;
-    text-decoration: none;
-}
-
-/* Main Content Styles */
-.content {
-    flex-grow: 1;
+/* Sidebar */
+.sidebar {
+    width: 20%;
+    background-color: var(--light-brown);
     padding: 20px;
+    color: var(--highlight-text);
+    text-align: center;
 }
 
-h1, h2 {
-    color: #FF6347; /* Red */
-}
-
-button {
-    background-color: #FF6347; /* Red */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #D2B48C; /* Light Brown */
-}
-
-form {
+.sidebar h2 {
+    color: var(--highlight-text);
     margin-bottom: 20px;
 }
 
-input, textarea {
-    display: block;
-    width: 100%;
+/* Main Content */
+.main-content {
+    width: 80%;
+    padding: 20px;
+    background-color: var(--cream);
+    overflow-y: scroll;
+}
+
+/* Form Elements */
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+form input, form textarea, form button {
+    margin-bottom: 15px;
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+    font-size: 16px;
+    border: 1px solid var(--light-brown);
+    border-radius: 5px;
+}
+
+/* Buttons */
+button {
+    background-color: var(--light-red);
+    color: var(--highlight-text);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: var(--accent-color);
+}
+
+/* Pages that need color contrasts */
+.page-section {
+    background-color: var(--light-brown);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.page-section h2 {
+    color: var(--highlight-text);
+}
+
+.page-section p {
+    color: var(--highlight-text);
 }
 

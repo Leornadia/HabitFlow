@@ -3,58 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habit Tracker</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="main.js" defer></script>
+    <title>HabitFlow - Welcome</title>
 </head>
 <body>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/journal">Journal</a>
+        <a href="/checkins">Check-ins</a>
+        <a href="/challenges">Challenges</a>
+        <a href="/login">Login</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
     <div class="container">
-        <aside class="sidebar">
+        <div class="sidebar">
             <h2>HabitFlow</h2>
-            <nav>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Journal</a></li>
-                    <li><a href="#">Challenges</a></li>
-                    <li><a href="#">Check-ins</a></li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
-            </nav>
-        </aside>
-        
-        <main class="content">
-            <h1>Welcome to Your Habit Tracker</h1>
-
-            <!-- Form for adding a habit -->
-            <section>
-                <h2>Your Habits</h2>
-                <form id="add-habit-form">
-                    <label for="habit-name">Habit Name:</label>
-                    <input type="text" id="habit-name" name="habit-name" placeholder="Enter habit name">
-                    
-                    <label for="habit-description">Habit Description:</label>
-                    <textarea id="habit-description" name="habit-description" placeholder="Enter habit description"></textarea>
-
-                    <button type="submit">Add Habit</button>
-                </form>
-            </section>
-
-            <!-- Progress Photos -->
-            <section>
-                <h2>Upload Progress Photo</h2>
-                <form id="upload-photo-form" enctype="multipart/form-data">
-                    <input type="file" name="progress-photo" accept="image/*">
-                    <button type="submit">Upload Photo</button>
-                </form>
-                <p id="upload-result"></p>
-            </section>
-
-            <!-- Habit Dashboard -->
-            <section>
-                <h2>Interactive Habit Dashboard</h2>
-                <canvas id="habitCompletionChart" width="400" height="200"></canvas>
-            </section>
-        </main>
+            <p>Track your habits and reach your goals!</p>
+        </div>
+        <div class="main-content">
+            <h1>Welcome to HabitFlow</h1>
+            <p>Your personalized habit tracking app!</p>
+        </div>
     </div>
 </body>
 </html>
