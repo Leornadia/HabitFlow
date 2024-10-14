@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Habitflow - Journal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h1>Journal</h1>
+      <form method="post">
+        <label for="entry">Entry:</label>
+        <textarea id="entry" name="entry"></textarea><br><br>
+        <input type="submit" value="Save">
+      </form>
+    </section>
+  </main>
+</body>
+</html>

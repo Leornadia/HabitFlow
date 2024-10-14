@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Habitflow</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h1>Welcome to Habitflow</h1>
+      <p>Habitflow is a habit tracker that helps you build positive habits and break negative ones.</p>
+    </section>
+  </main>
+</body>
+</html>
