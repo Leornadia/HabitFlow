@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Habitflow - Help</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section>
-      <h1>Help</h1>
-      <p>If you need help, please contact us at <a href="mailto:support@habitflow.com">support@habitflow.com</a>.</p>
-    </section>
-  </main>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Help</h1>
+  <p>This is the help page.</p>
+{% endblock %}

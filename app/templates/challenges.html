@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Habitflow - Challenges</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section>
-      <h1>Challenges</h1>
-      <ul>
-        <li>Challenge 1</li>
-        <li>Challenge 2</li>
-      </ul>
-    </section>
-  </main>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Challenges</h1>
+  <p>This is the challenges page.</p>
+{% endblock %}

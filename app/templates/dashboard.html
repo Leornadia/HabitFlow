@@ -15,12 +15,13 @@
           <li><a href="{{ url_for('quotes') }}">Quotes</a></li>
           <li><a href="{{ url_for('challenges') }}">Challenges</a></li>
         </ul>
+        <div class="bottom-links">
+          <a href="{{ url_for('help') }}">Help</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
       </div>
       <div class="col-md-10 main-content">
         <div class="top-navbar">
-          <div class="logo">
-            <img src="{{ url_for('static', filename='images/habitflow-logo.png') }}" alt="HabitFlow Logo">
-          </div>
           <div class="user-profile">
             <img src="{{ url_for('static', filename='images/user-profile-picture.png') }}" alt="User Profile Picture">
             <span>{{ current_user.username }}</span>
