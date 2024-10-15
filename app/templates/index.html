@@ -1,194 +1,100 @@
-<!-- Top Navigation Bar -->
-<nav class="top-nav">
-  <ul>
-    <li>
-      <a href="#" class="logo">HabitFlow</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link active">Dashboard</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Journal</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Checkin</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Quotes</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Streaks</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Challenges</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Help</a>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Settings</a>
-      <ul class="settings-dropdown">
-        <li>
-          <a href="#" class="settings-link">Dark Mode</a>
-        </li>
-        <li>
-          <a href="#" class="settings-link">Light Mode</a>
-        </li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabitFlow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#" class="dashboard-icon">Dashboard</a></li>
+        <li><a href="#" class="habits-icon">Habits</a></li>
+        <li><a href="#" class="journal-icon">Journal</a></li>
+        <li><a href="#" class="checkin-icon">Checkin</a></li>
+        <li><a href="#" class="quotes-icon">Quotes</a></li>
+        <li><a href="#" class="streaks-icon">Streaks</a></li>
+        <li><a href="#" class="challenges-icon">Challenges</a></li>
+        <li><a href="#" class="help-icon">Help</a></li>
+        <li><a href="#" class="settings-icon">Settings</a></li>
+        <li><a href="#" class="logout-icon">Logout</a></li>
       </ul>
-    </li>
-    <li>
-      <a href="#" class="nav-link">Logout</a>
-    </li>
-  </ul>
-</nav>
-
-<!-- Hero Section -->
-<section class="hero-section">
-  <h1>Welcome to HabitFlow!</h1>
-  <p>Track your habits and progress</p>
-  <p>Reach your goals and improve your life</p>
-</section>
-
-<!-- Habits Section -->
-<section class="habits-section">
-  <h2>Habits</h2>
-  <ul class="habits-list">
-    <li>
-      <span class="habit-name">Habit 1</span>
-      <span class="habit-description">Description of Habit 1</span>
-      <span class="habit-status">Active</span>
-    </li>
-    <li>
-      <span class="habit-name">Habit 2</span>
-      <span class="habit-description">Description of Habit 2</span>
-      <span class="habit-status">Inactive</span>
-    </li>
-  </ul>
-  <button class="add-habit-button">Add a new habit</button>
-  <button class="edit-habit-button">Edit existing habit</button>
-</section>
-
-<!-- Progress Section -->
-<section class="progress-section">
-  <h2>Progress</h2>
-  <canvas id="progress-chart" width="400" height="200"></canvas>
-  <p>Summary of progress: 50% completed this week</p>
-</section>
-
-<!-- Journal Section -->
-<section class="journal-section">
-  <h2>Journal</h2>
-  <ul class="journal-entries-list">
-    <li>
-      <span class="entry-date">2023-02-20</span>
-      <span class="entry-title">Entry 1</span>
-      <span class="entry-content">Content of Entry 1</span>
-    </li>
-    <li>
-      <span class="entry-date">2023-02-19</span>
-      <span class="entry-title">Entry 2</span>
-      <span class="entry-content">Content of Entry 2</span>
-    </li>
-  </ul>
-  <button class="new-entry-button">Create a new journal entry</button>
-  <form class="search-filter-form">
-    <input type="text" placeholder="Search for specific journal entries">
-    <select>
-      <option value="date">Date</option>
-      <option value="tag">Tag</option>
-    </select>
-  </form>
-</section>
-
-<!-- Checkin Section -->
-<section class="checkin-section">
-  <h2>Checkin</h2>
-  <form class="checkin-form">
-    <input type="text" placeholder="Habit name">
-    <select>
-      <option value="completed">Completed</option>
-      <option value="not completed">Not completed</option>
-    </select>
-    <textarea placeholder="Notes or comments"></textarea>
-  </form>
-  <ul class="checkin-history-list">
-    <li>
-      <span class="checkin-date">2023-02-20</span>
-      <span class="checkin-habit-name">Habit 1</span>
-      <span class="checkin-habit-status">Completed</span>
-    </li>
-    <li>
-      <span class="checkin-date">2023-02-19</span>
-      <span class="checkin-habit-name">Habit 2</span>
-      <span class="checkin-habit-status">Not completed</span>
-    </li>
-  </ul>
-</section>
-
-<!-- Quotes Section -->
-<section class="quotes-section">
-  <h2>Quotes</h2>
-  <blockquote>
-    <p>&quot;Inspirational quote to motivate users&quot;</p>
-  </blockquote>
-  <ul class="quotes-library-list">
-    <li>
-      <span class="quote-text">Quote 1</span>
-    </li>
-    <li>
-      <span class="quote-text">Quote 2</span>
-    </li>
-  </ul>
-  <button class="favourite-quotes-button">Save favourite quotes</button>
-</section>
-
-<!-- Streaks Section -->
-<section class="streaks-section">
-  <h2>Streaks</h2>
-  <p>Current streak: 10 days</p>
-  <p>Longest streak: 20 days</p>
-  <ul class="streaks-history-list">
-    <li>
-      <span class="streak-start-date">2023-02-10</span>
-      <span class="streak-end-date">2023-02-20</span>
-      <span class="streak-length">10 days</span>
-    </li>
-    <li>
-      <span class="streak-start-date">2023-01-10</span>
-      <span class="streak-end-date">2023-01-20</span>
-      <span class="streak-length">10 days</span>
-    </li>
-  </ul>
-</section>
-
-<!-- Challenges Section -->
-<section class="challenges-section">
-  <h2>Challenges</h2>
-  <ul class="current-challenges-list">
-    <li>
-      <span class="challenge-name">Challenge 1</span>
-      <span class="challenge-description">Description of Challenge 1</span>
-      <span class="challenge-start-date">2023-02-10</span>
-      <span class="challenge-end-date">2023-02-20</span>
-    </li>
-    <li>
-      <span class="challenge-name">Challenge 2</span>
-      <span class="challenge-description">Description of Challenge 2</span>
-      <span class="challenge-start-date">2023-01-10</span>
-      <span class="challenge-end-date">2023-01-20</span>
-    </li>
-  </ul>
-  <button class="new-challenge-button">Create a new challenge</button>
-  <ul class="challenge-history-list">
-    <li>
-      <span class="challenge-name">Challenge 1</span>
-      <span class="challenge-description">Description of Challenge 1</span>
-      <span class="challenge-end-date">2023-02-20</span>
-    </li>
-    <li>
-      <span class="challenge-name">Challenge 2</span>
-      <span class="challenge-description">Description of Challenge 2</span>
-      <span class="challenge-end-date">2023-01-20</span>
-    </li>
-  </ul>
-</section>
+    </nav>
+  </header>
+  <main>
+    <section class="dashboard-section">
+      <h1>Welcome to HabitFlow!</h1>
+      <p>Track your habits and progress</p>
+      <p>Reach your goals and improve your life</p>
+    </section>
+    <section class="habits-section" style="display: none;">
+      <h1>Habits</h1>
+      <form>
+        <label for="habit-name">Habit Name:</label>
+        <input type="text" id="habit-name" name="habit-name">
+        <label for="habit-description">Habit Description:</label>
+        <textarea id="habit-description" name="habit-description"></textarea>
+        <button type="submit">Add Habit</button>
+      </form>
+      <ul>
+        <!-- Habits will be displayed here -->
+      </ul>
+    </section>
+    <section class="journal-section" style="display: none;">
+      <h1>Journal</h1>
+      <form>
+        <label for="journal-entry">Journal Entry:</label>
+        <textarea id="journal-entry" name="journal-entry"></textarea>
+        <button type="submit">Add Journal Entry</button>
+      </form>
+      <ul>
+        <!-- Journal entries will be displayed here -->
+      </ul>
+    </section>
+    <section class="checkin-section" style="display: none;">
+      <h1>Checkin</h1>
+      <form>
+        <label for="habit-name">Habit Name:</label>
+        <input type="text" id="habit-name" name="habit-name">
+        <label for="checkin-status">Checkin Status:</label>
+        <select id="checkin-status" name="checkin-status">
+          <option value="completed">Completed</option>
+          <option value="not-completed">Not Completed</option>
+        </select>
+        <button type="submit">Checkin</button>
+      </form>
+      <ul>
+        <!-- Checkin history will be displayed here -->
+      </ul>
+    </section>
+    <section class="quotes-section" style="display: none;">
+      <h1>Quotes</h1>
+      <ul>
+        <!-- Quotes will be displayed here -->
+      </ul>
+    </section>
+    <section class="streaks-section" style="display: none;">
+      <h1>Streaks</h1>
+      <ul>
+        <!-- Streaks will be displayed here -->
+      </ul>
+    </section>
+    <section class="challenges-section" style="display: none;">
+      <h1>Challenges</h1>
+      <form>
+        <label for="challenge-name">Challenge Name:</label>
+        <input type="text" id="challenge-name" name="challenge-name">
+        <label for="challenge-description">Challenge Description:</label>
+        <textarea id="challenge-description" name="challenge-description"></textarea>
+        <button type="submit">Add Challenge</button>
+      </form>
+      <ul>
+        <!-- Challenges will be displayed here -->
+      </ul>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
