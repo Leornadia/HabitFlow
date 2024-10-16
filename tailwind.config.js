@@ -4,9 +4,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        'light-brown': 'var(--color-light-brown)',
-        'light-peach': 'var(--color-light-peach)',
-        'red': 'var(--color-red)',
+        brown: {
+          100: '#F5E6D3',
+          200: '#E6D0B8',
+          500: '#8B4513',
+        },
+        peach: {
+          100: '#FFDAB9',
+          200: '#FFDAB9',
+        },
       },
     },
   },

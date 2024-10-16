@@ -1,33 +1,24 @@
 import React from 'react';
-import { Sun, Moon, HelpCircle, Settings, User } from 'lucide-react';
+import { Sun, Moon, HelpCircle, User, Settings } from 'lucide-react';
 
 interface NavbarProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
-  username: string;
+  setCurrentPage: (page: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode, username }) => {
+const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode, setCurrentPage }) => {
   return (
-    <nav className={`flex justify-between items-center p-4 ${darkMode ? 'bg-gray-800' : 'bg-light-peach'}`}>
+    <nav className={`flex justify-between items-center p-4 ${darkMode ? 'bg-gray-800' : 'bg-brown-200'}`}>
       <div className="flex items-center space-x-4">
-        <h1 className="text-2xl font-bold">HabitFlow</h1>
-        <button className="btn" onClick={toggleDarkMode} title="Toggle dark mode">
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <HelpCircle className="cursor-pointer" onClick={() => setCurrentPage('Help')} />
+        <User className="cursor-pointer" onClick={() => setCurrentPage('Profile')} />
+        <Settings className="cursor-pointer" onClick={() => setCurrentPage('Settings')} />
       </div>
-      <div className="flex items-center space-x-4">
-        <button className="btn" title="Help">
-          <HelpCircle size={20} />
-        </button>
-        <button className="btn" title="Settings">
-          <Settings size={20} />
-        </button>
-        <div className="flex items-center space-x-2">
-          <User size={20} />
-          <span className="font-semibold">{username}</span>
-        </div>
-      </div>
+      <h1 className="text-2xl font-bold">HabitFlow</h1>
+      <button onClick={toggleDarkMode} className="p-2 rounded-full">
+        {darkMode ? <Sun /> : <Moon />}
+      </button>
     </nav>
   );
 };

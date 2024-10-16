@@ -1,40 +1,32 @@
 import React from 'react';
-import { Layout, Book, CheckSquare, Quote, Zap, Trophy, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 
 interface SidebarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  setCurrentPage: (page: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
-  const tabs = [
-    { name: 'dashboard', icon: Layout, label: 'Dashboard' },
-    { name: 'journal', icon: Book, label: 'Journal' },
-    { name: 'checkin', icon: CheckSquare, label: 'Check-in' },
-    { name: 'quotes', icon: Quote, label: 'Quotes' },
-    { name: 'streaks', icon: Zap, label: 'Streaks' },
-    { name: 'challenges', icon: Trophy, label: 'Challenges' },
-  ];
+const Sidebar: React.FC<SidebarProps> = ({ setCurrentPage }) => {
+  const menuItems = ['Dashboard', 'Journal', 'Check-ins', 'Quotes', 'Streaks', 'Challenges'];
 
   return (
-    <aside className="w-64 bg-white h-screen p-4 flex flex-col justify-between">
-      <div>
-        {tabs.map((tab) => (
-          <button
-            key={tab.name}
-            className={`flex items-center space-x-2 p-2 w-full text-left mb-2 rounded ${
-              activeTab === tab.name ? 'bg-light-peach text-red' : 'hover:bg-gray-100'
-            }`}
-            onClick={() => setActiveTab(tab.name)}
-          >
-            <tab.icon size={20} />
-            <span>{tab.label}</span>
-          </button>
-        ))}
-      </div>
-      <button className="flex items-center space-x-2 p-2 w-full text-left rounded hover:bg-gray-100">
-        <LogOut size={20} />
-        <span>Logout</span>
+    <aside className="w-64 bg-brown-100 h-screen p-4 flex flex-col">
+      <nav className="flex-1">
+        <ul>
+          {menuItems.map((item) => (
+            <li key={item} className="mb-2">
+              <button
+                onClick={() => setCurrentPage(item)}
+                className="w-full text-left p-2 rounded hover:bg-brown-200 transition-colors"
+              >
+                {item}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <button className="flex items-center p-2 rounded hover:bg-brown-200 transition-colors">
+        <LogOut className="mr-2" />
+        Logout
       </button>
     </aside>
   );
