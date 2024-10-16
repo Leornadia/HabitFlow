@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Sun, Moon } from 'lucide-react';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
-import Journal from './components/Journal';
-import CheckIns from './components/CheckIns';
-import Quotes from './components/Quotes';
-import Streaks from './components/Streaks';
-import Challenges from './components/Challenges';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
+import Journal from './Journal';
+import CheckIns from './CheckIns';
+import Quotes from './Quotes';
+import Streaks from './Streaks';
+import Challenges from './Challenges';
 
-function App() {
+const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [currentPage, setCurrentPage] = useState('Dashboard');
 
@@ -51,6 +50,7 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
+
