@@ -1,35 +1,17 @@
 import React from 'react';
-import { LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface SidebarProps {
-  setCurrentPage: (page: string) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ setCurrentPage }) => {
-  const menuItems = ['Dashboard', 'Journal', 'Check-ins', 'Quotes', 'Streaks', 'Challenges'];
-
-  return (
-    <aside className="w-64 bg-brown-100 h-screen p-4 flex flex-col">
-      <nav className="flex-1">
-        <ul>
-          {menuItems.map((item) => (
-            <li key={item} className="mb-2">
-              <button
-                onClick={() => setCurrentPage(item)}
-                className="w-full text-left p-2 rounded hover:bg-brown-200 transition-colors"
-              >
-                {item}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <button className="flex items-center p-2 rounded hover:bg-brown-200 transition-colors">
-        <LogOut className="mr-2" />
-        Logout
-      </button>
-    </aside>
-  );
-};
+const Sidebar = () => (
+  <div className="sidebar bg-light-brown h-screen w-1/6 p-4">
+    <Link to="/dashboard" className="block my-4">Dashboard</Link>
+    <Link to="/journal" className="block my-4">Journal</Link>
+    <Link to="/check-ins" className="block my-4">Check-ins</Link>
+    <Link to="/quotes" className="block my-4">Quotes</Link>
+    <Link to="/streaks" className="block my-4">Streaks</Link>
+    <Link to="/challenges" className="block my-4">Challenges</Link>
+    <Link to="/" className="block my-4 text-red-500">Logout</Link>
+  </div>
+);
 
 export default Sidebar;
+

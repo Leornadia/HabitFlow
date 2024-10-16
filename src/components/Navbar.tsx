@@ -1,26 +1,23 @@
 import React from 'react';
-import { Sun, Moon, HelpCircle, User, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface NavbarProps {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-  setCurrentPage: (page: string) => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode, setCurrentPage }) => {
-  return (
-    <nav className={`flex justify-between items-center p-4 ${darkMode ? 'bg-gray-800' : 'bg-brown-200'}`}>
-      <div className="flex items-center space-x-4">
-        <HelpCircle className="cursor-pointer" onClick={() => setCurrentPage('Help')} />
-        <User className="cursor-pointer" onClick={() => setCurrentPage('Profile')} />
-        <Settings className="cursor-pointer" onClick={() => setCurrentPage('Settings')} />
-      </div>
-      <h1 className="text-2xl font-bold">HabitFlow</h1>
-      <button onClick={toggleDarkMode} className="p-2 rounded-full">
-        {darkMode ? <Sun /> : <Moon />}
-      </button>
-    </nav>
-  );
-};
+const Navbar = () => (
+  <nav className="bg-light-peach p-4 flex justify-between items-center">
+    <div>
+      <Link to="/dashboard" className="m-2">Dashboard</Link>
+      <Link to="/journal" className="m-2">Journal</Link>
+      <Link to="/check-ins" className="m-2">Check-ins</Link>
+      <Link to="/quotes" className="m-2">Quotes</Link>
+      <Link to="/streaks" className="m-2">Streaks</Link>
+      <Link to="/challenges" className="m-2">Challenges</Link>
+    </div>
+    <div>
+      <span className="m-2">Leornadia</span>
+      <button className="m-2">Help</button>
+      <button className="m-2">Settings</button>
+    </div>
+  </nav>
+);
 
 export default Navbar;
+
