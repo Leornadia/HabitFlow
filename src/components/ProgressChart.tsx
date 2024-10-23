@@ -1,47 +1,42 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import React from 'react'
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from '@/components/ui/chart'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+const data = [
+  { day: 'Sun', completed: 1 },
+  { day: 'Mon', completed: 2 },
+  { day: 'Tue', completed: 1 },
+  { day: 'Wed', completed: 3 },
+  { day: 'Thu', completed: 4 },
+  { day: 'Fri', completed: 2 },
+  { day: 'Sat', completed: 1 },
+]
 
-const ProgressChart = () => {
-  const data = {
-    labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    datasets: [
-      {
-        label: 'Habit Completion',
-        data: [1, 2, 1, 3, 4, 2, 1],
-        fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgba(75, 192, 192, 0.2)',
-      },
-    ],
-  };
-
+export default function ProgressChart() {
   return (
-    <div>
-      <h2>Progress</h2>
-      <Line data={data} />
-    </div>
-  );
-};
-
-export default ProgressChart;
-
+    <Card>
+      <CardHeader>
+        <CardTitle>Weekly Progress</CardTitle>
+        <CardDescription>Your habit completion over the past week</CardDescription>
+      </CardHeader>
+      <CardContent className="pb-4">
+        <div className="h-[200px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data}>
+              <XAxis dataKey="day" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `${value}`}
+              />
+              <Tooltip />
+              <Line type="monotone" dataKey="completed" stroke="#8884d8" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}

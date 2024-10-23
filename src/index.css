@@ -42,6 +42,11 @@ body {
   padding: 1rem;
 }
 
+.navbar .flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 .sidebar {
   background-color: #E6D0B8;
   width: 250px;
@@ -69,7 +74,4 @@ body {
   padding: 2rem;
 }
 
-.mt-auto {
-  margin-top: auto;
-}
-
+.mt-auto

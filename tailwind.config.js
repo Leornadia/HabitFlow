@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -12,6 +11,9 @@ export default {
         peach: {
           100: '#FFDAB9',
           200: '#FFDAB9',
+        },
+        red: {
+          600: '#DC2626', 
         },
       },
     },
