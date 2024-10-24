@@ -1,6 +1,4 @@
-import React from 'react'
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from '@/components/ui/chart'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import React from 'react';
 
 const data = [
   { day: 'Sun', completed: 1 },
@@ -10,33 +8,26 @@ const data = [
   { day: 'Thu', completed: 4 },
   { day: 'Fri', completed: 2 },
   { day: 'Sat', completed: 1 },
-]
+];
 
-export default function ProgressChart() {
+const ProgressChart: React.FC = () => {
+  const maxCompleted = Math.max(...data.map(item => item.completed));
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Weekly Progress</CardTitle>
-        <CardDescription>Your habit completion over the past week</CardDescription>
-      </CardHeader>
-      <CardContent className="pb-4">
-        <div className="h-[200px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
-              <XAxis dataKey="day" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis
-                stroke="#888888"
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(value) => `${value}`}
-              />
-              <Tooltip />
-              <Line type="monotone" dataKey="completed" stroke="#8884d8" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
+    <div className="w-full h-64 flex items-end justify-between">
+      {data.map((item, index) => (
+        <div key={index} className="flex flex-col items-center">
+          <div 
+            className="w-8 bg-blue-500" 
+            style={{ 
+              height: `${(item.completed / maxCompleted) * 100}%`,
+            }}
+          ></div>
+          <span className="text-xs mt-1">{item.day}</span>
         </div>
-      </CardContent>
-    </Card>
-  )
-}
+      ))}
+    </div>
+  );
+};
+
+export default ProgressChart;
