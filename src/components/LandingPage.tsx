@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import { LogIn, UserPlus } from 'lucide-react';
-import Header from './Header';
 
-const LandingPage: React.FC<{ setCurrentPage: (page: string) => void }> = ({ setCurrentPage }) => {
-  const [darkMode, setDarkMode] = useState(false);
+interface LandingPageProps {
+  setCurrentPage: (page: string) => void;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ setCurrentPage }) => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isLoginForm) {
       // Add login logic here
-      setCurrentPage('Dashboard');
+      setCurrentPage('habits');
     } else {
       // Add sign-up logic here
       alert('Sign-up functionality coming soon!');
@@ -33,14 +31,12 @@ const LandingPage: React.FC<{ setCurrentPage: (page: string) => void }> = ({ set
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       
       <div className="relative z-10">
-        <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-
         <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
           <div className="max-w-md w-full">
             <h1 className="text-4xl font-bold mb-4 text-white text-center">Welcome to HabitFlow</h1>
             <p className="text-xl mb-6 text-white text-center">Your companion to track and improve your habits.</p>
             
-            <div className={`p-8 rounded-lg ${darkMode ? 'bg-gray-800 bg-opacity-90' : 'bg-white bg-opacity-90'} shadow-lg`}>
+            <div className="p-8 rounded-lg bg-white bg-opacity-90 shadow-lg">
               <h2 className="text-2xl font-semibold mb-6 text-center">{isLoginForm ? 'Log In' : 'Sign Up'}</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -50,7 +46,7 @@ const LandingPage: React.FC<{ setCurrentPage: (page: string) => void }> = ({ set
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className={`w-full px-3 py-2 rounded border ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                    className="w-full px-3 py-2 rounded border bg-white border-gray-300"
                     required
                   />
                 </div>
@@ -61,13 +57,13 @@ const LandingPage: React.FC<{ setCurrentPage: (page: string) => void }> = ({ set
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`w-full px-3 py-2 rounded border ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                    className="w-full px-3 py-2 rounded border bg-white border-gray-300"
                     required
                   />
                 </div>
                 <button
                   type="submit"
-                  className={`w-full flex justify-center items-center py-2 px-4 rounded ${darkMode ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+                  className="w-full flex justify-center items-center py-2 px-4 rounded bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   {isLoginForm ? <LogIn className="mr-2" size={18} /> : <UserPlus className="mr-2" size={18} />}
                   {isLoginForm ? 'Log In' : 'Sign Up'}

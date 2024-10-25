@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
   return (
-    <header className="bg-brown-500 text-white p-4">
+    <header className={`bg-brown-500 text-white p-4 ${darkMode ? 'dark' : ''}`}>
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <img src="/placeholder.svg?height=40&width=40" alt="HabitFlow Logo" className="mr-2 rounded-full" />
