@@ -1,83 +1,81 @@
 import React, { useState } from 'react';
-import { LogIn, UserPlus } from 'lucide-react';
 
 interface LandingPageProps {
-  setCurrentPage: (page: string) => void;
+  onLogin: (email: string, password: string) => void;
+  onSignUp: (email: string, password: string) => void;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ setCurrentPage }) => {
-  const [isLoginForm, setIsLoginForm] = useState(true);
-  const [username, setUsername] = useState('');
+const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignUp }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLoginForm) {
-      // Add login logic here
-      setCurrentPage('habits');
+    if (isLogin) {
+      onLogin(email, password);
     } else {
-      // Add sign-up logic here
-      alert('Sign-up functionality coming soon!');
+      onSignUp(email, password);
     }
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <img 
-        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photorealistic_3d_image_of_an_athletic_african_american_woman_in_sporty_attire_holding_a_smartphone_displaying_the_habitflow_logo_the_woman_is_smiling_confidently_facing_the_camera_in_a_dynamic_pose_that_suggests_-pFcnEp8rQllS307rr3AoLusmultXTs.jpeg" 
-        alt="Woman using HabitFlow app" 
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-      
-      <div className="relative z-10">
-        <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
-          <div className="max-w-md w-full">
-            <h1 className="text-4xl font-bold mb-4 text-white text-center">Welcome to HabitFlow</h1>
-            <p className="text-xl mb-6 text-white text-center">Your companion to track and improve your habits.</p>
-            
-            <div className="p-8 rounded-lg bg-white bg-opacity-90 shadow-lg">
-              <h2 className="text-2xl font-semibold mb-6 text-center">{isLoginForm ? 'Log In' : 'Sign Up'}</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="username" className="block text-sm font-medium mb-1">Username</label>
-                  <input
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full px-3 py-2 rounded border bg-white border-gray-300"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 rounded border bg-white border-gray-300"
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full flex justify-center items-center py-2 px-4 rounded bg-blue-500 hover:bg-blue-600 text-white"
-                >
-                  {isLoginForm ? <LogIn className="mr-2" size={18} /> : <UserPlus className="mr-2" size={18} />}
-                  {isLoginForm ? 'Log In' : 'Sign Up'}
-                </button>
-              </form>
-              <p className="mt-4 text-center">
-                {isLoginForm ? "Don't have an account? " : "Already have an account? "}
-                <button onClick={() => setIsLoginForm(!isLoginForm)} className="font-medium text-blue-500 hover:underline">
-                  {isLoginForm ? 'Sign Up' : 'Log In'}
-                </button>
-              </p>
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center" style={{backgroundImage: "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photorealistic_3d_image_of_an_athletic_african_american_woman_in_sporty_attire_holding_a_smartphone_displaying_the_habitflow_logo_the_woman_is_smiling_confidently_facing_the_camera_in_a_dynamic_pose_that_suggests_-AXj9zGVSXVHuZoR688h34nrRORbUnA.jpeg')"}}>
+      <div className="absolute inset-0 bg-black opacity-40"></div>
+      <div className="z-10 max-w-md w-full space-y-8 p-10 bg-white bg-opacity-90 rounded-xl shadow-xl">
+        <div>
+          <h1 className="text-4xl font-bold mb-2 text-center text-orange-600">Welcome to HabitFlow</h1>
+          <p className="text-xl mb-5 text-center text-gray-600">Track your habits, achieve your goals, and improve your life.</p>
+        </div>
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="email" className="sr-only">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="sr-only">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
           </div>
-        </main>
+
+          <div>
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              {isLogin ? 'Sign In' : 'Sign Up'}
+            </button>
+          </div>
+        </form>
+        <div className="text-center">
+          <button
+            className="font-medium text-orange-600 hover:text-orange-500"
+            onClick={() => setIsLogin(!isLogin)}
+          >
+            {isLogin ? 'Need an account? Sign up' : 'Already have an account? Log in'}
+          </button>
+        </div>
       </div>
     </div>
   );

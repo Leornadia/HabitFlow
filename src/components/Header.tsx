@@ -1,26 +1,34 @@
 import React from 'react';
-import { Bell, HelpCircle, Moon, Settings, Sun } from 'lucide-react';
+import { Moon, Sun, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  isLoggedIn: boolean;
+  onLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
+const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, isLoggedIn, onLogout }) => {
   return (
-    <header className={`bg-brown-500 text-white p-4 ${darkMode ? 'dark' : ''}`}>
+    <header className={`p-4 ${darkMode ? 'bg-gray-800' : 'bg-orange-800'} text-white`}>
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
-          <img src="/placeholder.svg?height=40&width=40" alt="HabitFlow Logo" className="mr-2 rounded-full" />
-          <span className="text-2xl font-bold">HabitFlow</span>
-        </div>
-        <nav className="flex items-center space-x-4">
-          <button className="p-2 rounded hover:bg-brown-600"><HelpCircle size={18} /></button>
-          <button className="p-2 rounded hover:bg-brown-600"><Bell size={18} /></button>
-          <button className="p-2 rounded hover:bg-brown-600"><Settings size={18} /></button>
-          <button className="p-2 rounded hover:bg-brown-600" onClick={toggleDarkMode}>
-            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+        <h1 className="text-2xl font-bold">HabitFlow</h1>
+        <nav>
+          <ul className="flex space-x-4 items-center">
+            <li>
+              <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-orange-700">
+                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+            </li>
+            {isLoggedIn && (
+              <li>
+                <button onClick={onLogout} className="flex items-center space-x-2 p-2 rounded hover:bg-orange-700">
+                  <LogOut className="h-5 w-5" />
+                  <span>Logout</span>
+                </button>
+              </li>
+            )}
+          </ul>
         </nav>
       </div>
     </header>

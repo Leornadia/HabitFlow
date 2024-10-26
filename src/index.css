@@ -25,8 +25,16 @@ body {
   padding: 2rem;
 }
 
-.bg-peach-100 {
-  background-color: #FFDAB9;
+.bg-orange-50 {
+  background-color: #FFF7ED;
+}
+
+.bg-orange-100 {
+  background-color: #FFE4B5;
+}
+
+.bg-orange-800 {
+  background-color: #9A3412;
 }
 
 .bg-gray-900 {
@@ -42,7 +50,6 @@ body {
 }
 
 .navbar {
-  background-color: #8B4513;
   padding: 1rem;
 }
 
@@ -52,7 +59,6 @@ body {
 }
 
 .sidebar {
-  background-color: #E6D0B8;
   width: 250px;
   padding: 1rem;
   display: flex;
@@ -80,4 +86,49 @@ body {
 
 .mt-auto {
   margin-top: auto;
+}
+
+/* Additional utility classes for the Dashboard */
+.w-64 {
+  width: 16rem;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gap-6 {
+  gap: 1.5rem;
 }
